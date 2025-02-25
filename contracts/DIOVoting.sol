@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
 
 contract DIOVoting {
     mapping(string => uint256) public votesReceived;
@@ -15,14 +15,21 @@ contract DIOVoting {
         candidateList.push(candidate);
     }
 
-    function voteForCandidate(string memory candidate) public {
-        require(validCandidate(candidate));
-        votesReceived[candidate] += 1;
+    function voteForCandidate(string memory candidate) public returns (string memory) {
+        if (validCandidate(candidate)) {
+            votesReceived[candidate] += 1;
+        } else {
+            return "Candidate not found";
+        }
+        return "Voted successfully";
+        
     }
 
     function totalVotesFor(string memory candidate) public view returns (uint256) {
-        require(validCandidate(candidate));
-        return votesReceived[candidate];
+        if (validCandidate(candidate)) {
+            return votesReceived[candidate];
+        }
+        return 0;
     }
 
     function validCandidate(string memory candidate) public view returns (bool) {
@@ -35,7 +42,7 @@ contract DIOVoting {
     }
 
     function getCandidateList() public view returns (string[] memory) {
-        console.log("Number of candidates is %s", candidateList.length);
+        //console.log("Number of candidates is %s", candidateList.length);
         return candidateList;
     }
 }

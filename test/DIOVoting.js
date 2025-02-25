@@ -38,7 +38,7 @@ describe("DIOVoting contract", function () {
         const candidateList = ["Thiago"];
         const dioVoting = await hre.ethers.deployContract("DIOVoting", [candidateList]);
 
-        expect(await dioVoting.voteForCandidate("Iara")).to.be.equal(false);
+        expect(await dioVoting.voteForCandidate("Iara")).to.be.revertedWith("Candidate not found");
     });
 
     
